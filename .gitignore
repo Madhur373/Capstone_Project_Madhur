@@ -1,8 +1,42 @@
-
-# Playwright
+# ── Node ────────────────────────────────────────────────────────────────────
 node_modules/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Playwright ───────────────────────────────────────────────────────────────
+# Test results (videos, screenshots, traces) — generated on every run
+test-results/
+playwright-report/
+
+# Auth session file — contains cookies/tokens, never commit this
+tests/**/auth.json
+auth.json
+
+# ── Allure ───────────────────────────────────────────────────────────────────
+# Generated report output — too large and always regenerated
+allure-report/
+allure-results/
+
+# ── OS files ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ── Environment / Secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Misc ─────────────────────────────────────────────────────────────────────
+*.log
+*.tmp
+*.cache
