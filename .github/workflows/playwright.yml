@@ -1,19 +1,19 @@
-name: Playwright Tests CI/CD
+name: Playwright Tests CI
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [main, dev]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
     inputs:
       test_folder:
-        description: 'Which test folder to run (leave empty to run ALL)'
+        description: Which test folder to run
         required: false
-        default: ''
+        default: all
         type: choice
         options:
-          - ''
+          - all
           - tests/auth
           - tests/cart
           - tests/catalog
@@ -29,65 +29,60 @@ jobs:
     timeout-minutes: 90
 
     steps:
-      # ── 1. Checkout ────────────────────────────────────────────────────────
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ── 2. Node.js ─────────────────────────────────────────────────────────
-      - name: Set up Node.js 20
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
-      # ── 3. Install npm dependencies ────────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── 4. Install only Chromium (faster than all browsers) ───────────────
-      - name: Install Playwright Chromium + system deps
+      - name: Install Playwright Chromium and system dependencies
         run: npx playwright install --with-deps chromium
 
-      # ── 5. Run tests ───────────────────────────────────────────────────────
       - name: Run Playwright tests
         run: |
-          if [ -z "${{ github.event.inputs.test_folder }}" ]; then
-            echo "▶ Running ALL tests..."
-            npx playwright test
+          TEST_FOLDER="${{ github.event.inputs.test_folder || 'all' }}"
+
+          if [ "$TEST_FOLDER" = "all" ]; then
+            echo "Running all tests..."
+            npm run test:ci
           else
-            echo "▶ Running ${{ github.event.inputs.test_folder }} tests..."
-            npx playwright test ${{ github.event.inputs.test_folder }}
+            echo "Running $TEST_FOLDER tests..."
+            npx playwright test "$TEST_FOLDER" --project=chromium
           fi
         env:
           CI: true
-          # Tells Playwright to use more CI-friendly settings
           PLAYWRIGHT_BROWSERS_PATH: 0
 
-      # ── 6. Upload HTML report (always — even on failure) ──────────────────
-      - name: Upload HTML Report
+      - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-html-report
           path: playwright-report/
+          if-no-files-found: ignore
           retention-days: 30
 
-      # ── 7. Upload videos + screenshots on failure ──────────────────────────
-      - name: Upload failure artifacts
-        if: failure()
+      - name: Upload test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-test-results
+          name: playwright-test-results
           path: test-results/
+          if-no-files-found: ignore
           retention-days: 7
 
-      # ── 8. Summary ─────────────────────────────────────────────────────────
       - name: Print summary
         if: always()
         run: |
           echo "================================================"
-          echo "  Branch  : ${{ github.ref_name }}"
-          echo "  Trigger : ${{ github.event_name }}"
-          echo "  Folder  : ${{ github.event.inputs.test_folder || 'ALL' }}"
-          echo "  Status  : ${{ job.status }}"
+          echo "Branch  : ${{ github.ref_name }}"
+          echo "Trigger : ${{ github.event_name }}"
+          echo "Folder  : ${{ github.event.inputs.test_folder || 'all' }}"
+          echo "Status  : ${{ job.status }}"
           echo "================================================"
