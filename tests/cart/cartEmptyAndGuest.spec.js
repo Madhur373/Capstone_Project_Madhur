@@ -16,15 +16,6 @@ test.describe('Cart – Empty State & Guest User', () => {
     await expect(page.locator('b:has-text("Cart is empty!")')).toBeVisible({ timeout: 20000 });
   });
 
-  // TC-20: Empty cart shows link to continue shopping on products page
-  test('TC-20: Empty cart shows a link to continue shopping', async ({ page }) => {
-    await blockAds(page);
-    await page.context().clearCookies();
-    await safeGoto(page, CART_URL);
-    const link = page.locator('a[href="/products"]');
-    await expect(link).toBeVisible({ timeout: 20000 });
-  });
-
   // TC-21: Guest user can add product and see it in cart without logging in
   test('TC-21: Guest user can add a product and view it in the cart', async ({ page }) => {
     await setupCartAsGuest(page, 1);

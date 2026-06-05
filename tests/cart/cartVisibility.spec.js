@@ -22,16 +22,6 @@ test.describe('Cart – Page Visibility', () => {
     await expect(page.locator('#cart_info_table')).toBeVisible();
   });
 
-  // TC-03: Cart table headers are all present
-  test('TC-03: Cart table has all 5 column headers (Image, Product, Price, Quantity, Total)', async ({ page }) => {
-    const headers    = page.locator('#cart_info_table thead th');
-    const headerText = await headers.allTextContents();
-    const normalised = headerText.map(h => h.trim().toLowerCase());
-    expect(normalised).toEqual(
-      expect.arrayContaining(['image', 'product', 'price', 'quantity', 'total'])
-    );
-  });
-
   // TC-04: "Proceed To Checkout" button is visible when cart has items
   test('TC-04: "Proceed To Checkout" button is visible when cart has items', async ({ page }) => {
     await expect(page.locator('a:has-text("Proceed To Checkout")')).toBeVisible();

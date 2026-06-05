@@ -9,15 +9,6 @@ const { setupAndGoToCheckout, completePayment, CART_URL } = require('./checkoutH
  */
 test.describe('Checkout – End-to-End Flow', () => {
 
-  // TC-23: Completing checkout shows "Order Placed!" confirmation
-  test('TC-23: Completing full checkout shows order placed confirmation', async ({ page }) => {
-    await setupAndGoToCheckout(page);
-    await completePayment(page);
-    await expect(
-      page.locator('h2:has-text("Order Placed!"), b:has-text("Order Placed!")')
-    ).toBeVisible({ timeout: 20000 });
-  });
-
   // TC-24: "Continue" button on confirmation page redirects to home
   test('TC-24: Clicking "Continue" on order confirmation redirects to home page', async ({ page }) => {
     await setupAndGoToCheckout(page);

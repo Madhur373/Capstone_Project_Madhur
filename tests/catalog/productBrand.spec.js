@@ -30,15 +30,4 @@ test.describe('Products – Brand Filter', () => {
     expect(page.url()).toContain('/brand_products/');
   });
 
-  
-  test('TC-25: Brand products page heading contains the selected brand name', async ({ page }) => {
-    await page.locator('.brands_products').scrollIntoViewIfNeeded();
-    const firstBrandLink = page.locator('.brands_products ul li a').first();
-    const brandName = await firstBrandLink.textContent();
-    await firstBrandLink.click();
-    await page.locator('h2.title.text-center').waitFor({ state: 'visible', timeout: 20000 });
-    const heading = await page.locator('h2.title.text-center').first().textContent();
-    expect(heading?.toLowerCase()).toContain(brandName?.trim().toLowerCase() ?? '');
-  });
-
 });

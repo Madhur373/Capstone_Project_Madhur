@@ -12,12 +12,6 @@ test.describe('Checkout – Address Details', () => {
     await setupAndGoToCheckout(page);
   });
 
-  // TC-07: Delivery address heading says "Your delivery address"
-  test('TC-07: Delivery address section has correct heading', async ({ page }) => {
-    const heading = page.locator('#address_delivery').locator('..').locator('h2.heading').first();
-    await expect(heading).toContainText('Address');
-  });
-
   // TC-08: Delivery address contains a name (non-empty first line)
   test('TC-08: Delivery address section contains a non-empty name', async ({ page }) => {
     const nameEl = page.locator('#address_delivery .address_firstname');

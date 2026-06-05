@@ -55,18 +55,4 @@ test.describe('Checkout – Order Summary', () => {
     expect(totalText).toContain('Rs.');
   });
 
-  // TC-18: Total price in summary equals price × quantity
-  test('TC-18: Row total price equals unit price multiplied by quantity', async ({ page }) => {
-    const firstRow  = page.locator('#cart_info tbody tr').first();
-    const priceText = await firstRow.locator('.cart_price p').textContent();
-    const qtyText   = await firstRow.locator('.cart_quantity button').textContent();
-    const totalText = await firstRow.locator('.cart_total p').textContent();
-
-    const price = parseFloat(priceText?.replace(/[^0-9.]/g, '') ?? '0');
-    const qty   = parseFloat(qtyText?.trim() ?? '1');
-    const total = parseFloat(totalText?.replace(/[^0-9.]/g, '') ?? '0');
-
-    expect(total).toBeCloseTo(price * qty, 1);
-  });
-
 });

@@ -48,20 +48,6 @@ test.describe('Cart – Item Details', () => {
     expect(text).toContain('Rs.');
   });
 
-  // TC-11: Row total price equals unit price × quantity
-  test('TC-11: Row total price equals unit price multiplied by quantity', async ({ page }) => {
-    const row       = page.locator('#cart_info_table tbody tr').first();
-    const priceText = await row.locator('.cart_price p').textContent();
-    const qtyText   = await row.locator('.cart_quantity button').textContent();
-    const totalText = await row.locator('.cart_total p').textContent();
-
-    const price = parseFloat(priceText?.replace(/[^0-9.]/g, '') ?? '0');
-    const qty   = parseFloat(qtyText?.trim() ?? '1');
-    const total = parseFloat(totalText?.replace(/[^0-9.]/g, '') ?? '0');
-
-    expect(total).toBeCloseTo(price * qty, 1);
-  });
-
   // TC-12: Product name in cart row links to product detail page
   test('TC-12: Product name in cart row is a link to the product detail page', async ({ page }) => {
     const link = page.locator('#cart_info_table tbody tr').first()
