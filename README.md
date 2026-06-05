@@ -260,7 +260,7 @@ Manual execution supports selecting a specific test folder:
 
 ## Final Execution Result
 
-- 122 / 122 test cases passed
+- 139 / 139 test cases passed
 - Stable Chromium execution
 - HTML report generated successfully
 - Allure report generated successfully
