@@ -57,7 +57,6 @@ jobs:
           fi
         env:
           CI: true
-          PLAYWRIGHT_BROWSERS_PATH: 0
 
       - name: Upload HTML report
         if: always()
