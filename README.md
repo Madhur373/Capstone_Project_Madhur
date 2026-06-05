@@ -12,7 +12,6 @@ The framework automates key business workflows of the [Automation Exercise](http
 - Git and GitHub
 - GitHub Actions CI/CD
 - HTML Reporting
-- JUnit Reporting
 - Allure Reporting
 - API Testing
 
@@ -60,29 +59,6 @@ Capstone_Project_Madhur/
 - Profile Module
 - API Testing Module
 - Home Page Validation Module
-
-## Features
-
-- Chromium browser automation
-- Cross-browser-ready Playwright configuration
-- Data-driven testing
-- API validation testing
-- Reusable helper utilities
-- Page Object Model support
-- Robust locator strategies
-- Stable navigation helpers
-- Ad and tracker request blocking for CI stability
-- Screenshot capture on failure
-- Video recording on failure
-- Trace capture on failure
-- HTML report generation
-- JUnit report generation
-- Allure report support
-- GitHub Actions CI/CD execution
-- Manual workflow trigger for selected test folders
-- CI-friendly retries and timeouts
-- Sequential execution for shared test account stability
-- 122 automated test cases
 
 ## Test Scenarios Covered
 
