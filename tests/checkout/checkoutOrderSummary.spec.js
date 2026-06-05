@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { setupAndGoToCheckout } = require('./checkoutHelper');
 
-/**
- * checkoutOrderSummary.spec.js
- * TC-13 to TC-18 — Tests the order summary / cart review table on checkout.
- */
+
 test.describe('Checkout – Order Summary', () => {
 
   test.beforeEach(async ({ page }) => {

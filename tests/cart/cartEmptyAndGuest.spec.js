@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { blockAds, safeGoto, setupCartAsGuest, CART_URL, BASE_URL } = require('./cartHelper');
 
-/**
- * cartEmptyAndGuest.spec.js
- * TC-19 to TC-22 — Tests empty cart state and guest user behaviour.
- */
+
 test.describe('Cart – Empty State & Guest User', () => {
 
   // TC-19: Fresh session cart shows "Cart is empty!" message

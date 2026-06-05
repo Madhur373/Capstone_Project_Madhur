@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { setupCart } = require('./cartHelper');
 
-/**
- * cartItemDetails.spec.js
- * TC-07 to TC-12 — Verifies product info shown in each cart row.
- */
+
 test.describe('Cart – Item Details', () => {
 
   test.beforeEach(async ({ page }) => {

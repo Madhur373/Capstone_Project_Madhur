@@ -27,7 +27,7 @@ test.describe('Cart – Navigation', () => {
     expect(page.url()).toContain('/product_details/');
   });
 
-  /* TC-25: Cart persists after navigating away and returning
+  /* Addon Cart persists after navigating away and returning
   test('TC-25: Cart items persist after navigating to home and back', async ({ page }) => {
     // Count before navigating away
     const countBefore = await page.locator('#cart_info_table tbody tr').count();

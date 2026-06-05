@@ -29,7 +29,7 @@ test.describe('Cart – Add & Remove Items', () => {
     await expect(rows).toHaveCount(3);
   });
 
-  /* TC-16: Removing one item from a two-item cart leaves one row
+  /* Ad On: Removing one item from a two-item cart leaves one row
   test('TC-16: Removing one item from a two-item cart leaves one row', async ({ page }) => {
     await setupCart(page, [1, 2]);
     await page.locator('.cart_quantity_delete').first().click();
@@ -38,7 +38,7 @@ test.describe('Cart – Add & Remove Items', () => {
     await expect(rows).toHaveCount(1);
   });
 
-  // TC-17: Removing the only item shows "Cart is empty!" message
+  // Add on 
   test('TC-17: Removing the only cart item shows "Cart is empty!" message', async ({ page }) => {
     await setupCart(page, [1]);
     await page.locator('.cart_quantity_delete').first().click();

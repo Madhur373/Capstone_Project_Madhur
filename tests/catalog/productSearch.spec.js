@@ -2,10 +2,6 @@
 const { test, expect } = require('@playwright/test');
 const { blockAds, goToProducts } = require('./productHelper');
 
-/**
- * productSearch.spec.js
- * TC-07 to TC-12 — Tests the product search feature.
- */
 test.describe('Products – Search', () => {
 
   test.beforeEach(async ({ page }) => {

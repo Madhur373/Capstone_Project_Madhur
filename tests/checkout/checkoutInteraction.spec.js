@@ -2,11 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { setupAndGoToCheckout, blockAds, safeGoto, CART_URL, BASE_URL } = require('./checkoutHelper');
 
-/**
- * checkoutInteraction.spec.js
- * TC-19 to TC-22 — Tests user interactions on the checkout page:
- * comment box, Place Order navigation, guest modal, and back navigation.
- */
+
 test.describe('Checkout – Interactions', () => {
 
   // TC-19: Comment box accepts and retains text input

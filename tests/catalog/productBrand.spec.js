@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { blockAds, safeGoto, BASE_URL } = require('./productHelper');
 
-/**
- * productBrand.spec.js
- * TC-23 to TC-25 — Tests brand sidebar filtering.
- */
+
 test.describe('Products – Brand Filter', () => {
 
   test.beforeEach(async ({ page }) => {

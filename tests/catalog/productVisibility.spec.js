@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { blockAds, safeGoto, goToProducts, PRODUCTS_URL, BASE_URL } = require('./productHelper');
 
-/**
- * productVisibility.spec.js
- * TC-01 to TC-06 — Verifies all UI elements on the products listing page.
- */
+
 test.describe('Products – Page Visibility', () => {
 
   test.beforeEach(async ({ page }) => {

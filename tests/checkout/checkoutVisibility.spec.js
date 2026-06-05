@@ -2,10 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const { setupAndGoToCheckout } = require('./checkoutHelper');
 
-/**
- * checkoutVisibility.spec.js
- * TC-01 to TC-06 — Verifies all UI elements visible on the checkout page.
- */
+
 test.describe('Checkout – Page Visibility', () => {
 
   test.beforeEach(async ({ page }) => {
