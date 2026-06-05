@@ -2,59 +2,92 @@ name: Playwright Tests CI/CD
 
 on:
   push:
-    branches:
-      - main
-      - dev
+    branches: [ main, dev ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      test_folder:
+        description: 'Which test folder to run (leave empty to run ALL)'
+        required: false
+        default: ''
+        type: choice
+        options:
+          - ''
+          - tests/auth
+          - tests/cart
+          - tests/catalog
+          - tests/checkout
+          - tests/payments
+          - tests/profile
+          - tests/api
 
 jobs:
   test:
     name: Run Playwright Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
 
     steps:
-      # ── 1. Checkout the repository ──────────────────────────────────────
+      # ── 1. Checkout ────────────────────────────────────────────────────────
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # ── 2. Set up Node.js ───────────────────────────────────────────────
-      - name: Set up Node.js
+      # ── 2. Node.js ─────────────────────────────────────────────────────────
+      - name: Set up Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      # ── 3. Install dependencies ─────────────────────────────────────────
+      # ── 3. Install npm dependencies ────────────────────────────────────────
       - name: Install dependencies
         run: npm ci
 
-      # ── 4. Install Playwright browsers ──────────────────────────────────
-      - name: Install Playwright browsers
+      # ── 4. Install only Chromium (faster than all browsers) ───────────────
+      - name: Install Playwright Chromium + system deps
         run: npx playwright install --with-deps chromium
 
-      # ── 5. Run ALL tests ────────────────────────────────────────────────
+      # ── 5. Run tests ───────────────────────────────────────────────────────
       - name: Run Playwright tests
-        run: npx playwright test
+        run: |
+          if [ -z "${{ github.event.inputs.test_folder }}" ]; then
+            echo "▶ Running ALL tests..."
+            npx playwright test
+          else
+            echo "▶ Running ${{ github.event.inputs.test_folder }} tests..."
+            npx playwright test ${{ github.event.inputs.test_folder }}
+          fi
         env:
           CI: true
+          # Tells Playwright to use more CI-friendly settings
+          PLAYWRIGHT_BROWSERS_PATH: 0
 
-      # ── 6. Upload HTML report (always, even on failure) ─────────────────
-      - name: Upload Playwright HTML Report
+      # ── 6. Upload HTML report (always — even on failure) ──────────────────
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-html-report
           path: playwright-report/
           retention-days: 30
 
-      # ── 7. Upload test result videos/screenshots on failure ─────────────
-      - name: Upload test results on failure
+      # ── 7. Upload videos + screenshots on failure ──────────────────────────
+      - name: Upload failure artifacts
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-results
+          name: failed-test-results
           path: test-results/
           retention-days: 7
+
+      # ── 8. Summary ─────────────────────────────────────────────────────────
+      - name: Print summary
+        if: always()
+        run: |
+          echo "================================================"
+          echo "  Branch  : ${{ github.ref_name }}"
+          echo "  Trigger : ${{ github.event_name }}"
+          echo "  Folder  : ${{ github.event.inputs.test_folder || 'ALL' }}"
+          echo "  Status  : ${{ job.status }}"
+          echo "================================================"
